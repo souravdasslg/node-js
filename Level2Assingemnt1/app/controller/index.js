@@ -1,10 +1,12 @@
 var express = require('express');
 var mongoose = require('mongoose');
 var BlogPost = mongoose.model('Blog');
+//middlewares
 var dataValidateCreate = require ('../../middlewares/dataValidateCreate.js');
 var dataValidateEdit = require('../../middlewares/dataValidateEdit.js');
+//library
 var response = require('../../lib/response.js');
-
+//instance of router
 var router = express.Router();
 
 module.exports.controller = function(app) {
@@ -25,7 +27,7 @@ module.exports.controller = function(app) {
     });//end of find
   });//end of home route
 
-
+//create route
  router.post('/create',dataValidateCreate.dataValidateCreate,function(req,res){
    var newPost = new BlogPost({
        _id           : req.body.id,
@@ -41,18 +43,20 @@ module.exports.controller = function(app) {
          }//end if
          else{
            var resmsg = response.generate(false,"OK",200,result);
-           res.send("Data Saved!");
+           res.send(resmsg);
          }
        });//end save
  });//end of create route
 
- router.get('/find/:idno',function(req,res){
-   BlogPost.findOne({'_id':req.params.idno},function(err,result){
+//find route
+ router.get('/find/:id',function(req,res){
+   BlogPost.findOne({'_id':req.params.id},function(err,result){
      if(err){
        var resmsg = response.generate(true,err,500,null);
        res.send(resmsg);
-     } else if(result == "null" || result == ""){
+     }else if(result == "null" || result == "" || result == undefined){
         var resmsg = response.generate(true,"No data found",404,result);
+        res.send(resmsg);
       }else{
        var resmsg = response.generate(false,"Success",200,result);
        res.send(resmsg);
@@ -61,27 +65,33 @@ module.exports.controller = function(app) {
 
  });//end of find
 
- router.post('/edit/:id' , function (req,res) {
+//edit route
+ router.post('/edit/:id',dataValidateEdit.dataValidateEdit,function (req,res) {
    BlogPost.findById({'_id' : req.params.id},function(err,result){
      if(err){
        var resmsg = response.generate(true,err,500,null);
        res.send(resmsg);
      }
-     else if((result == null) || (result== ""))
+     //If "id" parameter doesnot match or any other erroe when empty result is retured, to handle that error
+     else if(result == null || result== "" || result == undefined)
      {
        var resmsg = response.generate(true,"No Data",404,null);
        res.send(resmsg);
      }
      else{
-       result.authorName = req.body.author;
-       result.blogTitle = req.body.blogtitle;
-       result.postContent = req.body.postcontent;
+       // If any user send empty value, this code will prevent error
+       //This code will update over existing data
+       result.postContent = req.body.postbody || result.postContent;
+       result.blogTitle = req.body.posttitle || result.blogTitle;
+       result.authorName = req.body.author || result.authorName;
        result.lastModified = Date.now();
        result.save(function(err,newresult){
          if(err){
-           res.send(err);
+           var resmsg = response.generate(true,err,500,null);
+           res.send(resmsg);
          }else{
-           res.send(newresult);
+           var resmsg = response.generate(false,"Success",200,newresult)
+           res.send(resmsg);
          }
        })
      }
@@ -90,16 +100,18 @@ module.exports.controller = function(app) {
 
 router.post('/delete/:id', function(req, res){
   BlogPost.remove({'_id' :req.params.id},function(err,result){
+    //result is converted to javascript object so that internal values can be accessed.
     var foundResult = JSON.parse(result);
     if(err){
       var resmsg = response.generate(true,err,500,null);
       res.send(resmsg);
      }
+     //Based upon the result that is return by mongoose this condition checks for internal functionality
     else if((foundResult.n == 1)&&(foundResult.ok == 1)){
       var resmsg = response.generate(false,"Success",200,result);
       res.send(resmsg);
     }
-    else((foundResult.n == 0)&&(foundResult.ok == 1)){
+    else{
       var resmsg = response.generate(true,"Nothing to delete",404,result);
       res.send(resmsg);
     }

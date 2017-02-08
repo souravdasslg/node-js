@@ -12,8 +12,5 @@ exports.dataValidateCreate = function(req,res,next){
 else{
    var resmsg = response.generate(true,"Error Occured",404,null);
    res.send(resmsg);
-
-
-}
-
+ }
 }

@@ -44,7 +44,7 @@ fs.readdirSync(controllerDir).forEach(function(file){
 app.set('x-powered-by' , false);
 //Setting up the listener port for application
 app.set('port', process.env.PORT || 3000);
-
+//listening to port
 app.listen(app.get('port'),function(){
   console.log("App is running on port : " + app.get('port'));
 });

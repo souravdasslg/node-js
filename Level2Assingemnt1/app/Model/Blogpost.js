@@ -7,7 +7,8 @@ var blogPost = new schema({
   blogTitle    : {type : String , default:'',required : true},
   postContent   : {type : String, default:'',required : true},
   createdAt     : {type : Date },
-  lastModified  : {type : Date }
+  lastModified  : {type : Date },
+  tags          : []
 
 });
 
