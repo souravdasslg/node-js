@@ -1,0 +1,27 @@
+{
+  "name": "robustapp",
+  "version": "1.0.0",
+  "description": "Yet Another Online Shopping Store",
+  "main": "app.js",
+  "author": "Sourav",
+  "license": "ISC",
+  "scripts": {
+    "start": "node app.js"
+  },
+  "dependencies": {
+    "body-parser": "latest",
+    "cookie-parser": "latest",
+    "ejs": "^2.5.5",
+    "express": "^4.14.0",
+    "express-session": "^1.15.0",
+    "handlebars": "^4.0.6",
+    "jade": "^1.11.0",
+    "mongoose": "latest",
+    "mongoose-find-or-create": "^1.1.0",
+    "mongoose-findorcreate": "^1.0.0",
+    "morgan": "latest",
+    "passport": "^0.3.2",
+    "passport-facebook": "^2.1.1",
+    "passport-twitter": "^1.0.4"
+  }
+}
