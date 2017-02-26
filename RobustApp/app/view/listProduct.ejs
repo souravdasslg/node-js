@@ -1,0 +1,33 @@
+
+   <!-- <%for(i=0;i<products.length;i++) {%>
+     <a href="/admin/products/<%products[i]._id%>"><%=products[i].productName%></a> <br>
+     <a href="/admin/products/edit/<%=products[i]._id%>">Edit</a> || <a href="/admin/products/delete/<%=products[i]._id%>">Delete</a>
+   <%}%> -->
+
+   <!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Admin Products List</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+</head>
+<body>
+
+<div class="container">
+  <h2>Products</h2>
+  <div class="list-group">
+    <%for(i=0;i<products.length;i++) {%>
+    <a href="#" class="list-group-item">
+      <h4 class="list-group-item-heading"><%=i+1%>.<%=products[i].productName%></h4>&nbsp;&nbsp;&nbsp;
+      <p class ="list-group-item-text">Product ID :<%=products[i]._id%> <a href="/products/<%=products[i]._id%>">See Details</a></p>
+      <p class="list-group-item-text"><a href="/admin/products/edit/<%=products[i]._id%>">Edit</a>&nbsp;&nbsp;&nbsp;<a href="/admin/products/delete/<%=products[i]._id%>">Delete</a>&nbsp;&nbsp;In Stock : <%=products[i].inStock%></p>
+    </a>
+    <%}%>
+  </div>
+</div>
+
+</body>
+</html>

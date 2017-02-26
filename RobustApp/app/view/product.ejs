@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+<style>
+h1 {
+  color: white;
+  text-shadow: 1px 1px 2px black, 0 0 25px blue, 0 0 5px darkblue;
+  text-align: center;
+}
+body {
+
+}
+p{
+
+}
+</style>
+</head>
+<body>
+
+<h1><%=products.productName%></h1>
+
+<p>Product Name : <%=products.productName%></p>
+<p>Product Catagory : <%=products.productCatagory%></p>
+<p>Product Description : <%=products.productDescription%></p>
+<p>Product Price : <%=products.productPrice%></p>
+<p>Product Stock : <% if(products.inStock>0) {%> In Stock <%}else{%> Out Of Stock <%}%></p>
+
+<p><strong><a href="/products/buy/<%=products._id%>">Buy!</a></strong>&nbsp;&nbsp;&nbsp;
+<strong><a href="/cart/<%=products._id%>">Add to cart</a></strong>&nbsp;&nbsp;&nbsp;
+<strong><a href="/products/wishlist/<%=products._id%>/wishlist">Add to wishlist</a></strong>
+
+</body>
+</html>

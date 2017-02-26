@@ -5,51 +5,53 @@ var crypto = require('crypto');
 var Customer = mongoose.model('Customer');
 var router  = express.Router();
 
+var Hash= require('../../lib/encrypt-pass');
+
 exports.controller = function(app){
   router.post('/',function(req,res){
     {
 
-        if(req.body.username!=undefined&&req.body.username!=undefined&&req.body.password!=undefined&&req.body.repassword!=undefined){
-          if(req.body.password===req.body.password){
+        if((req.body.username!=undefined || req.body.username!="")&&
+        (req.body.password!=undefined || req.body.password!="")&&
+        (req.body.repassword!=undefined || req.body.repassword!="")){
+          if(req.body.password===req.body.repassword){
             var  newCustomer = new Customer({
             customerId     : '1827369903588855'+""+shortId.generate(), //to maintain the similarity between all ids
             customerName   : req.body.username,
             email          : req.body.email,
-            password       : hash(req.body.password),
+            password       : Hash.makeHash(req.body.password),
             accountCreated : Date.now(),
             provider       : "Self"
           });
-          newCustomer.save(function(err){
+          newCustomer.save(function(err,customer){
                 if(err){
                   console.log(err);
-                  res.redirect('/error');
+                  res.render('error',{error:err});
                 }
                 else{
-                  req.session.user = req.user;
-                  res.redirect('/');
+                  req.session.user = customer;
+                  res.render('info',{info : "User Registration Successful!"});
                 }
               });//end save
           }//end inner if
           else{
-            res.send("pass dont matches");
+            res.redirect("/signup");
           }
         }//end if
         else{
-          res.send("parameter error");
+          res.send('/');
         }
 
     }
 });
 
 
+router.get('/', function(req, res) {
+		res.render('signup.ejs');
+	});
+
+
+
+
   app.use('/signup',router);
-}
-
-//password encryption
-
-function hash(string){
-var hash = crypto.createHmac('sha256', string)
-                   .update(string)
-                   .digest('hex');
-    return hash
 }

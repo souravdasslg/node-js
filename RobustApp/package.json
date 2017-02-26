@@ -10,18 +10,21 @@
   },
   "dependencies": {
     "body-parser": "latest",
+    "connect-ensure-login": "^0.1.1",
     "cookie-parser": "latest",
     "ejs": "^2.5.5",
     "express": "^4.14.0",
     "express-session": "^1.15.0",
-    "handlebars": "^4.0.6",
-    "jade": "^1.11.0",
+    "lodash": "^4.17.4",
     "mongoose": "latest",
     "mongoose-find-or-create": "^1.1.0",
     "mongoose-findorcreate": "^1.0.0",
     "morgan": "latest",
     "passport": "^0.3.2",
     "passport-facebook": "^2.1.1",
-    "passport-twitter": "^1.0.4"
+    "passport-google-oauth": "^1.0.0",
+    "passport-local": "^1.0.0",
+    "passport-twitter": "^1.0.4",
+    "shortid": "^2.2.6"
   }
 }

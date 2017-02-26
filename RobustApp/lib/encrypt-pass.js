@@ -1,6 +1,7 @@
+var crypto = require('crypto');
 module.exports.makeHash = function(password){
   var hash = crypto.createHmac('sha256', password)
-                     .update(string)
+                     .update(password)
                      .digest('hex');
       return hash
 }

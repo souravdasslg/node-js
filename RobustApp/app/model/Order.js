@@ -5,6 +5,7 @@ var Order = new Schema({
   customerId     : {type : String ,required : 'true'},
   orderId        : {type : Number ,required : true,default : 000},
   productId      : {type : Number , required :true},
+  orderQuantity  : {type : Number},
   orderDate      : {type : Date , default : Date.now()},
   paymentType    : {type : String , required : true},
   orderPrice     : {type : Number , default:0.00},
