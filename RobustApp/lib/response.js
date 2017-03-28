@@ -1,3 +1,4 @@
+//JSON response generation Library
 module.exports.generate = function(error,message,status,data)
 {
 var response = {
